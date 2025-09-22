@@ -1,0 +1,94 @@
+🔹 Paso 1: Entender MVC en Laravel
+
+Modelo (M): Representa tus tablas en la base de datos (usuarios, notas). Se usan para consultar, insertar, actualizar y eliminar datos.
+
+Vista (V): Lo que el usuario ve. Son archivos Blade (HTML + sintaxis de Laravel) en resources/views/.
+
+Controlador (C): Recibe las peticiones del usuario, pide los datos al modelo, y devuelve la vista. Están en app/Http/Controllers/.
+
+📌 Ejemplo conceptual en tu proyecto:
+
+El Modelo Usuario representa la tabla usuarios.
+
+El Modelo Nota representa la tabla notas.
+
+El Controlador NotaController pedirá las notas al modelo y las mandará a la vista.
+
+La Vista notas/index.blade.php mostrará las notas en pantalla.
+
+🔹 Paso 2: Crear los modelos
+
+Laravel espera que los modelos estén en app/Models/.
+
+👉 Crea los tuyos:
+
+php artisan make:model Usuario
+php artisan make:model Nota
+
+
+Ahora tendrás:
+
+app/Models/Usuario.php
+
+app/Models/Nota.php
+
+📌 Tu tarea:
+En Usuario.php agrega que su tabla es usuarios.
+En Nota.php agrega que su tabla es notas y que pertenece a un usuario.
+(no te doy el código todavía, lo escribes tú mismo; si quieres te doy la “receta” con las funciones que deben ir)
+
+🔹 Paso 3: Crear el controlador
+
+Genera un controlador para manejar las notas:
+
+php artisan make:controller NotaController --resource
+
+
+Esto crea app/Http/Controllers/NotaController.php con métodos CRUD listos (index, create, store, show, edit, update, destroy).
+
+📌 Tu tarea:
+Abre el archivo y en el método index() escribe la lógica para consultar todas las notas.
+Puedes hacerlo de dos maneras:
+
+
+bd - modelo - controlador - vista - usuario
+
+
+Usando Eloquent: Nota::all();
+
+Usando Query Builder: DB::table('notas')->get();
+
+🔹 Paso 4: Crear las vistas
+
+Las vistas se guardan en resources/views/.
+
+Crea una carpeta notas/ y dentro:
+
+index.blade.php → lista todas las notas
+
+create.blade.php → formulario para nueva nota
+
+📌 Tu tarea:
+En index.blade.php escribe un HTML sencillo con una tabla y un @foreach para recorrer las notas.
+
+🔹 Paso 5: Rutas
+
+En routes/web.php conecta las URLs con el controlador:
+
+👉 Usa:
+
+Route::resource('notas', NotaController::class);
+
+
+Esto genera todas las rutas CRUD automáticamente:
+
+/notas → index
+
+/notas/create → create
+
+/notas/{id}/edit → edit
+
+etc.
+
+📌 Tu tarea:
+Verifica que php artisan route:list te muestre esas rutas.
